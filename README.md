@@ -1,2 +1,5 @@
 # Estadia2
 CURSO TÉCNICAS  Y METODOLOGIAS EN GENÉTICA
+
+
+## Semana 1
