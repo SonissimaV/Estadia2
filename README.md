@@ -10,5 +10,7 @@ Guiandome con el tutorial https://docs.github.com/es/get-started/quickstart/hell
 Mediante la utilización de Ubuntu se probaron comandos descritos en la "Unidad 1" del repositorio BioinfinvRepro año 2018. Comandos tales como:
 - `pwd`   # para poder conocer la ruta del directorio en el que actualmente estamos
 - `ls`    # para poder conocer los archivos y carpetas que estan dentro de un directorio
-- `` 
-
+- `mkdir` # para crear una carpeta
+- `cd`    # para poder entrar a una carpeta
+- `cd ..` # para poder volver a la carpeta anterior
+- ``
