@@ -152,10 +152,51 @@ Se prueba el comando *grep* usando `grep lycopersicum jitomate.fasta`, obteniend
 ```
 Ademas de esto tiene muchas más opciones, por ejemplo usando *-c* permite contar las lineas donde aparecen un caracter de interes; *-l* entrega todos los nombres de archivos en los cuales se encuentra la expresion de interes, al agregar *-i* se hace insensible la busqueda a mayusculas o minusculas; *-w* termine buscar palabras enteras con lo que busco y no partes de palabras.
 
+Se realizaron los ejercicios 1 y 2:
+*ejercicio 1*
 ```{bash}
+$ grep -oE "\Physalis philadelphica" tomatesverdes.fasta 
+Physalis philadelphica
+Physalis philadelphica
+Physalis philadelphica
+Physalis philadelphica
+Physalis philadelphica
 ```
+
+*ejercicio 2*
+Pendiente!
+
+
+### Loops
+Los loops son funciones que se repiten una serie de comandos cuando se cumplan las condiciones, en el caso de bash tienen una estructura basica de:
+*for* i *in* lista de palabras, caracteres no separados por comas *; do*
+*comando* (ejemplo echo) *;done*
+
+Un ejemplo:
 ```{bash}
+$ for unidades in "Unidad 1" "Unidad 2" "Unidad 3"; do
+> echo la $unidades es la más entrenida de todas; done
+la Unidad 1 es la más entrenida de todas
+la Unidad 2 es la más entrenida de todas
+la Unidad 3 es la más entrenida de todas
 ```
+Preguntas:
+¿Cuándo debo usar comillas en la lista de elementos?
+R: Se usan comillas cuando el elemento de la lista tiene espacios entremedio
+¿Qué hace ;?
+R: El punto y coma ; señaliza el termino de la condición.
+Pregunta ¿De qué manera sencilla borrarías muchos directorios a la vez?
+R: `rm -r dire*`
+
+Para crear una variable que quiera ser introducida en un loop del tipo *for*, es importante que entre el nombre de la variable y la variable vaya el signo "=" sin empacios; ejemplo: `curso=Tecnicas`
+
+
+
+
+
+
+
+
 ```{bash}
 ```
 ```{bash}
