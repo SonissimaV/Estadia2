@@ -129,22 +129,45 @@ $ touch ejemplo_final.bed
 $ touch ejemplo_final.fam
 ```
 
+Para saber cuantos archivos hay con la misma terminación, ejemplo *.bed*; se utiliza el comodín `*` tambien llamado wildcard, el cual reemplaza a los caracteres (cualquier caracter y cualquier cantidad de caracteres). Un ejemplo de su uso es `$ ls *final*` donde el comodin abarca todos los caracteres anteriores y posteriores a la palabra *final*, la salida fue:
+```{bash}
+ejemplo_final.bed  nuevos_final.bed  nuevos_final.fam
+ejemplo_final.fam  nuevos_final.bim  nuevos_final.log
+```
+Otros comodines, pero mas limitados son *?* el cual solo es capaz de reemplazar un caracter y *[]* el cual permite agrupar los caracteres a reemplazar; ejemplos de usos de estos comodines son:
+```{bash}
+$ ls nuevos_final.???
+nuevos_final.bed  nuevos_final.bim  nuevos_final.fam  nuevos_final.log
+$ ls [a-z]*.bim
+nuevos_final.bim
+```
 
-
+La busqueda de patrones es algo muy utilizado en genética, ya que permite encontrar de manera rápida patrones determinados, cuantificarlos e incluso reemplazarlos. En el ejemplo del workshop se busco y reemplazo el nombre cientifico de una especie de tomates por la palabra *jitomate* en el archivo *jitomate.fasta* usando el comando `sed 's/Solanum lycopersicum/jitomate/' jitomate.fasta` el resultado de este comando fue el reemplazo de una parte del encabezado de 3 secuencias.
+El comando *awk* tiene variadas funciones, por ejemplo, puede contar la cantidad de lineas de un fichero (jitomate.fasta) escribiendo `$ awk 'END {print NR}' jitomate.fasta` que nos arroja un numero entero de 42.
+Se prueba el comando *grep* usando `grep lycopersicum jitomate.fasta`, obteniendo:
+```{bash}
+>gi|315140847|gb|HQ593449.1| Solanum lycopersicum voucher AP471 maturase K (matK) gene, partial cds; chloroplast
+>gi|385137316|gb|JQ412261.1| Solanum lycopersicum voucher BS0156 maturase K (matK) gene, partial cds; chloroplast
+>gi|315259972|gb|HQ619840.1| Solanum lycopersicum isolate LegMedMO_116 maturase K (matK) gene, partial cds; chloroplast
+```
+Ademas de esto tiene muchas más opciones, por ejemplo usando *-c* permite contar las lineas donde aparecen un caracter de interes; *-l* entrega todos los nombres de archivos en los cuales se encuentra la expresion de interes, al agregar *-i* se hace insensible la busqueda a mayusculas o minusculas; *-w* termine buscar palabras enteras con lo que busco y no partes de palabras.
 
 ```{bash}
 ```
-
-
 ```{bash}
 ```
-
-
-
-
 ```{bash}
 ```
-
+```{bash}
+```
+```{bash}
+```
+```{bash}
+```
+```{bash}
+```
+```{bash}
+```
 
 
 
