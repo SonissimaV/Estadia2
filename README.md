@@ -116,10 +116,28 @@ error: el siguiente archivo tiene cambios en stage en el índice:
     ejemplo2.txt
 (usa --cached para conservar el archivo, o -f para forzar su eliminación)
 ```
+Debido a que me encuentro trabajando en mi repositorio, los comandos *push* y *fetch* no se probaron. 
+
+A continuación se configuro el git local a la cuenta Github usando los comandos `$ git config --global user.email soniavidal@uchile.cl` y `$ git config user.name SonissimaV`, el correcto ingreso se verifico con el comando `$ git config user.email` el cual dio como resultado:
+```{bash}
+soniavidal@uchile.cl
+```
+
+Siguiendo con los ejercicios del workshop, se generan los archivos `ejemplo_final.bed` y `ejemplo_final.fam` usando el comando 
+```{bash}
+$ touch ejemplo_final.bed
+$ touch ejemplo_final.fam
+```
 
 
 
 
+```{bash}
+```
+
+
+```{bash}
+```
 
 
 
