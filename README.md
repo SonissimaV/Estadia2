@@ -190,25 +190,65 @@ R: `rm -r dire*`
 
 Para crear una variable que quiera ser introducida en un loop del tipo *for*, es importante que entre el nombre de la variable y la variable vaya el signo "=" sin empacios; ejemplo: `curso=Tecnicas`
 
+En los loop *for* tambien se pueden utilizar archivos, como por ejemplo *.fasta*:
+`for i in *.fasta; do
+echo debemos buscar una secuencia en el archivo $i;done`
+```{bash}
+$ for i in *.fasta;do echo "Ejemplo de archivo fasta es $i";done
+Ejemplo de archivo fasta es jitomate.fasta
+Ejemplo de archivo fasta es tomatesverdes.fasta
+```
+Tambien se pueden utilizar listas asociadas previamente a una variable con la salvedad que debe hacerse alucion a esta anotando `${lista[@]}`, por ejemplo:
+```{bash}
+$ lista=(Unidad1 "Unidad2" Unid3)
+$ for i in ${lista[@]}; do
+> echo La mejor manera de escribir la unidad es $i; done
+La mejor manera de escribir la unidad es Unidad1
+La mejor manera de escribir la unidad es Unidad2
+La mejor manera de escribir la unidad es Unid3
+```
+Las listas puede ser resultado de un comando como `grep` u otro similar. Aunque es bueno que la salidad de este comando sea guardado como un nuevo archivo, por ejemplo: `$ grep -oE "\w+_[0-9]*" nuevos_final.fam > muestras.txt` para luego realizar el loop con este archivo: `$ for i in $(cat muestras.txt); do echo Hacer algo con la muestra $i; done`.
 
 
+### Scrips
+Es un texto plano en el cual esta ordenado de manera secuencial y clara las instrucciones necesarias para llevar a cabo un analisis más complejo. Es útil para poder recordar que función cumple cada linea del codigo, es facil de compartir y utilizar posteriormente para repetir el analisis o variar algunos elementos.
+Un buen script posee los codigos o instrucciones para la computadora debe ejecutar en el orden en que deben ser ejecutados y a la vez, comentarios (que comienzan por el simbolo *#*) para que las personas pueden entender de manera rapida y sencilla la funcion del script completo o de alguna linea en particular.
 
+Para iniciar un scrip se hace con un edito de texto, se eligio *nano*, `nano script_prueba.sh`. Una vez abierto el script se escriben las instrucciones, en este caso las mismas entregadas por el workshop:
+```{bash}
+#!/bin/bash
+# -*- ENCODING: UTF-8 -*-
+
+## Este script baja 3 secuencias de Chiropterotriton de NCBI
+# Crear directorio para guardar datos
+mkdir Chiropt
+
+# Bajar datos de NCBI
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&rettype=fasta&id=937202862,937202860,937202858" > Chiropt/ranas.fasta
+
+# Revisar qué secuencias se bajaron
+grep ">" Chiropt/ranas.fasta
+
+echo "listo" 
+```
+
+Una vez listo el script se debe correr, para esto debemos estar en la carpeta donde esta el script y correr el comando `bash`
+```{bash}
+$ bash script_prueba.sh 
+>KT820711.1 Chiropterotriton sp. SMR-2015b voucher MVZ:Herp:269665 cytochrome b (cytb) gene, partial cds; mitochondrial
+>KT820710.1 Chiropterotriton sp. SMR-2015a voucher IBH:28182 cytochrome b (cytb) gene, partial cds; mitochondrial
+>KT820709.1 Chiropterotriton sp. SMR-2015a voucher IBH:28178 cytochrome b (cytb) gene, partial cds; mitochondrial
+Listo
+```
+
+
+## R
 
 
 
 
 ```{bash}
 ```
-```{bash}
-```
-```{bash}
-```
-```{bash}
-```
-```{bash}
-```
-```{bash}
-```
 
 
 
@@ -225,3 +265,4 @@ Para crear una variable que quiera ser introducida en un loop del tipo *for*, es
 
 
 
+cd Escritorio/SONIA/estadia2/wksp2019/Unidad1/Bash_git/Prac_bash
