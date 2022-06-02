@@ -244,6 +244,39 @@ Listo
 
 ## R
 
+Los script de R pueden correrse sin necesidad de abrir R propiamente tal, usando el comando `Rscript` seguido del archivo .R, el resultado de este script aparecerá en pantalla.
+Si uso el comando `R CMD BATCH` tambien corro el archivo .R, pero ahora el resultado del script se guarda en un archivo .Rout el cual contiene la informacion basica de R, el contenido del script y el resultado, continuado de datos del procesamiento del script como el tiempo. Ejemplo:
+```{bash}
+$ R CMD BATCH holascript.R
+$ cat holascript.Rout 
+
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R es un software libre y viene sin GARANTIA ALGUNA.
+Usted puede redistribuirlo bajo ciertas circunstancias.
+Escriba 'license()' o 'licence()' para detalles de distribucion.
+
+R es un proyecto colaborativo con muchos contribuyentes.
+Escriba 'contributors()' para obtener más información y
+'citation()' para saber cómo citar R o paquetes de R en publicaciones.
+
+Escriba 'demo()' para demostraciones, 'help()' para el sistema on-line de ayuda,
+o 'help.start()' para abrir el sistema de ayuda HTML con su navegador.
+Escriba 'q()' para salir de R.
+
+> x<-10
+> y<-6
+> cat("¡Hola mundo!", x, "+", y, "es igual a", x+y)
+¡Hola mundo! 10 + 6 es igual a 16> write(x, file="aquiestax.txt")
+> 
+> proc.time()
+   user  system elapsed 
+  0.092   0.009   0.082 
+```
+
+Otra manera de poder utilizar R y que es más amigable con el usuario es atraves de RStudio.
 
 
 
