@@ -278,6 +278,9 @@ Escriba 'q()' para salir de R.
 
 Otra manera de poder utilizar R y que es más amigable con el usuario es atraves de RStudio.
 
+Una de las razones que hace a R una herramienta tan poderosa es que al ser de codigo abierto esta constantemente agregando nuevos paquetes con funciones nuevas y depuradas que son agregadas por todo tipo de profesionales. El principal repositorio para estos paquetes es *CRAN*, pero a nivel de analisis genomico el mas potente es *Bioconductor*. 
+Para el uso de paquetes lo primero que debe hacerse es la instalacion mediante el comando `install.packages("nombre del paquete")` y para activarlo simplemente el comando `library("nombre del paquete")`.
+
 
 
 ```{bash}
