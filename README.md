@@ -297,7 +297,7 @@ En primer lugar dentro de esta funcion *Graphics* se vio graficos clasicos como 
 
 - Gráfico de puntos
 
-
+[![Rplot.jpg](https://i.postimg.cc/CMZ3ZWHk/Rplot.jpg)](https://postimg.cc/SjhT31Px)
 
 
 
