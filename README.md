@@ -283,6 +283,26 @@ Para el uso de paquetes lo primero que debe hacerse es la instalacion mediante e
 
 
 
+
+
+## Semana 2, R
+
+Siguiendo con la leccion de R/RStudio.
+
+Para poder cargar archivos existen varias maneras, por ejemplo *read.delim* permite archivos de filas y columnas. Esto incluye datos geneticos que una vez abiertos pueden ser utilizados para graficar y analizarlo.
+
+Existen varios paquetes con funciones especializadas para graficar datos geneticos, paquetes tales como *ggplot2*, *ggbio*, *ape*, entre otras. En este caso se utilizó una funcion que viene en el paquete base para las más simples y luego algunos paquetes para graficos mas complejos.
+
+En primer lugar dentro de esta funcion *Graphics* se vio graficos clasicos como graficos de puntos o `plot`, de barras o `barplot`, de caja y bigotes o `boxplot`, histogramas o `hist`, de torta o `pie`, entre otros.
+
+- Gráfico de puntos
+
+
+
+
+
+
+
 ```{bash}
 ```
 
