@@ -295,9 +295,47 @@ Existen varios paquetes con funciones especializadas para graficar datos genetic
 
 En primer lugar dentro de esta funcion *Graphics* se vio graficos clasicos como graficos de puntos o `plot`, de barras o `barplot`, de caja y bigotes o `boxplot`, histogramas o `hist`, de torta o `pie`, entre otros.
 
-- Gráfico de puntos
+- Gráfico de puntos:
+
+```{bash}
+plot(x=cars$speed, y=cars$dist, xlab="Velocidad", ylab="Distancia", cex=0.5, pch=19, main = "Ejemplo gráfico PLOT")
+```
+Donde *cars* corresponde a una base de datos que viene con R, *xlab* e *ylab* son comandos para colocarles titulos a los ejes x e y, respectivamente. El comando *cex* se utiliza para determinar el tamaño del icono que marca los datos donde 1 es el tamaño estandar, *pch* es un comando para elegir el tipo de icono que marca los datos (en este caso circulos macizos) y *main* para colocar un titulo al grafico.
 
 [![Rplot.jpg](https://i.postimg.cc/CMZ3ZWHk/Rplot.jpg)](https://postimg.cc/SjhT31Px)
+
+- Gráfico de barra:
+```{bash}
+barplot(reads$nreads, col=rainbow(6), xlab="Sample", ylab="Reads", main = "Ejemplo barplot")
+```
+[![barplot.jpg](https://i.postimg.cc/sXg8XYcQ/barplot.jpg)](https://postimg.cc/HJF3v7Fd)
+
+Un paquete mas especializado para los gráficos es *ggplot2* el cual se caracteriza por ir agregando linea a linea caracteristicas adicionales al gráfico.
+
+Por ejemplo en el siguiente codigo:
+
+```{bash}
+ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  ggtitle("Ejemplo ggplot2") +
+  xlab("Largo sepalo") + ylab("Ancho sepalo") + 
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic")) +
+  geom_point(aes(colour = Species,size = Petal.Width, shape= Species)) +
+  scale_size_area('Ancho petalo', max_size = 4)
+```
+Donde:
+
++ ggplot es el comando basico el cual usa como base de datos *iris* 
++ Como eje X se ocupa la columna *Sepal.length* y como eje Y la columna *Sepal.Width"
++ El simbolo *+* se utiliza para ir agregando más caracteristicas al gráfico
++ con el comando *ggtitle* podemos agregar un titulo al gráfico y con *theme(plot.title...* cambiarle caracteristicas como el color, tamaño, tipo de letra, etc
++ De manera similar *xlab* e *ylab* son para agregarle titulos a los ejes
++ Con el comando *geom_point* se determina que sea un grafico de puntos donde el color de los grupos esta dado por *colour* y el tipo de marcador por *shape* y en este caso ambos son atraves de la columna *Species*, ademas de que el tamaño de los puntos esta determinado por el ancho de los petalos en el comando *size*
++ Para poder cambiar el titulo y los tamaños de los puntos de la leyenda es que se usa *scale_size_area*
+
+[![Ejemplo-ggplot2.jpg](https://i.postimg.cc/G2sF0scD/Ejemplo-ggplot2.jpg)](https://postimg.cc/1nsnwXVR)
+
+
+
 
 
 
