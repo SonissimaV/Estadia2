@@ -187,7 +187,22 @@ title("Familia felidae (paquete rotl)")
 
 
 
-### Unidad 2, Docker
+### Unidad 2, Markdown
+
+El principal problema que se tiene hoy en día en la ciencia en general es la reproducibilidad de los resultados y la bioinformatica no se salva de este conflicto. Por este motivo nacen los repositorios, para poder contener gran cantidad de datos generados, pero solo tener los datos no es suficiente para lograr la tan anhelada reproducibilidad de los resultados. Se hace indispensable el poder seguir los mismos pasos, la misma depuracion de datos brutos, los mismos parametros de analisis, etc. Todo esto debe estar especificado en un script lo más claro posible y seguir el mismo orden en que fue realizado la primera vez para reproducirlo e incluso mejorarlo.
+
+Una manera de escribir estos script es en *Markdown*, el cual es un formato ampliamente utilizado en Github, Stackoverflow y otras plataformas gracias a su sencillez al tratarse de un archivo de texto plano pero con caracteristicas que permiten ser empleado, por ejemplo, para ser transformado rapidamente a HTML. Dentro de las ventajas la utilizacion de Markdown esta la aplicación universal, ya que la sintaxis es reconocida en todos los sistemas operativos, repositorios y reconocida rapidamente; ademas, las herramientas basadas en Markdown son gratis.
+
+La sintaxis basica de Markdown es:
+
+- Encabezados: los titulos se anotan con *#* donde la cantidad de # va a determinar el tamaño.
+# H1 Un solo gato
+## H2 Dos gatos
+### H3 Tres gatos
+#### H4 Cuatro gatos
+##### H5 Cinco gatos
+###### H6 Seis gatos
+
 
 
 
