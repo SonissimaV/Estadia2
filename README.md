@@ -205,11 +205,11 @@ La sintaxis basica de Markdown es:
 
 
 
-- Enfasis: para destacar palabras por sobre otras
-Para colocar palabras en cursiva se puede usar asteriscos o guion bajo `*palabras entre asteriscos*` *cursiva* o  `_palabras entre guiones bajos_` _cursiva_.
-Para colocar palabras en negrita se usan los mismos asteriscos o guion bajo pero dobles `**palabras entre asteriscos**` **negrita** o  `__palabras entre guiones bajos__` __negrita__.
-Estas dos maneras se pueden mezclar usando una combinacion entre simples y dobles `**dobles y _simples_**` **negritas y _cursivas_**.
-Tambien se pueden tachar palabras usando virgulas simples `~entre virgulas simples~` ~tachada~.
+- Enfasis: para destacar palabras por sobre otras.
+    * Para colocar palabras en cursiva se puede usar asteriscos o guion bajo `*palabras entre asteriscos*` *cursiva* o  `_palabras entre guiones bajos_` _cursiva_.
+    * Para colocar palabras en negrita se usan los mismos asteriscos o guion bajo pero dobles `**palabras entre asteriscos**` **negrita** o  `__palabras entre guiones bajos__` __negrita__.
+     * Estas dos maneras se pueden mezclar usando una combinacion entre simples y dobles `**dobles y _simples_**` **negritas y _cursivas_**.
+     * Tambien se pueden tachar palabras usando virgulas simples `~entre virgulas simples~` ~tachada~.
 
 
 
