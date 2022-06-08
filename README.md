@@ -213,6 +213,32 @@ La sintaxis basica de Markdown es:
 
 
 
+- Se pueden listar de distintas maneras:
+    * Haciendo un listado de numeros:
+`1. Primero
+2. Segundo`
+1. Primero
+2. Segundo
+
+    * Usando asteriscos:
+`* Primero
+* Segundo`
+* Primero
+* Segundo
+
+    * Usando lineas:
+`- Primero
+- Segundo`
+- Primero
+- Segundo
+
+    * Usando simbolo más:
+`+ Primero
++ Segundo`
++ Primero
++ Segundo
+
+
 
 
 
