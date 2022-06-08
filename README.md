@@ -312,8 +312,7 @@ barplot(reads$nreads, col=rainbow(6), xlab="Sample", ylab="Reads", main = "Ejemp
 
 Un paquete mas especializado para los gráficos es *ggplot2* el cual se caracteriza por ir agregando linea a linea caracteristicas adicionales al gráfico.
 
-Por ejemplo en el siguiente codigo:
-
+Por ejemplo en el siguiente codigo para un grafico de puntos:
 ```{bash}
 ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
   ggtitle("Ejemplo ggplot2") +
@@ -334,6 +333,37 @@ Donde:
 
 [![Ejemplo-ggplot2.jpg](https://i.postimg.cc/G2sF0scD/Ejemplo-ggplot2.jpg)](https://postimg.cc/1nsnwXVR)
 
+Tambien se pueden separar las especies una en un grafico separado cada uno, usando el codigo:
+```{bash}
+ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  ggtitle("Ejemplo ggplot2 separados") +
+  xlab("Largo sepalo") + ylab("Ancho sepalo") + 
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic")) +
+  geom_point(aes(colour = Species,size = Petal.Width, shape= Species)) +
+  scale_size_area('Ancho petalo', max_size = 4)+
+  facet_grid(Species ~ .)
+```
+
+Donde al agregar el comando *facet_grid* estoy seleccionando en base a que parametro separadar las grillas, en este caso según las especies.
+
+[![Ejemplo-ggplot2-separado.jpg](https://i.postimg.cc/kG654xVJ/Ejemplo-ggplot2-separado.jpg)](https://postimg.cc/D4hhp4dH)
+
+Tambien se pueden agregar modelos matematicos, como una linea de tendencia para cada especie de la siguiente manera:
+```{bash}
+ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  ggtitle("Ejemplo ggplot2 separados") +
+  xlab("Largo sepalo") + ylab("Ancho sepalo") + 
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic")) +
+  geom_point(aes(colour = Species,size = Petal.Width, shape= Species)) +
+  scale_size_area('Ancho petalo', max_size = 4)+
+  facet_grid(Species ~ .)+
+  geom_smooth(method="lm")
+```
+Donde el comando *geom_smooth* en el metodo "lm" corresponde a un modelo lineal.
+
+[![Ejemplo-ggplot2-separados-con-modelo-lineal.jpg](https://i.postimg.cc/N0sm0zQQ/Ejemplo-ggplot2-separados-con-modelo-lineal.jpg)](https://postimg.cc/jD1LgvW1)
+
+Ahora el mismo paquete pero para graficos de barra:
 
 
 
