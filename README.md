@@ -203,6 +203,8 @@ La sintaxis basica de Markdown es:
 ##### H5 Cinco gatos
 ###### H6 Seis gatos
 
+- Enfasis: para destacar palabras por sobre otras
+Para colocar palabras en cursiva se puede usar asteriscos o guion bajo `*palabras entre asteriscos*` *palabras entre asteriscos* o  `_palabras entre guiones bajos_` _palabras entre guiones bajos_.
 
 
 
