@@ -384,6 +384,50 @@ Donde se grafican los datos *reads*, pero en primer lugar lo que se hace es orde
 
 #### *ggplot2* tambien tiene una version para graficos de bigotes y caja:
 
+```{r}
+p <- ggplot(data=reads, aes(x=Library, y=nreads, fill=Library)) + 
+  geom_boxplot()+  
+  ggtitle("Ejemplo boxplot ggplot2") +
+  xlab("Libreria") + ylab("Número lecturas") + 
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic")) 
+p
+```
+Donde el comando `geom_boxplot` es quien determina que se trate de un grafico de cajas, el resto de los comandos son los mismos usados para barplot y ggplot.
+
+[![ejemplo-boxplot-ggplot2.jpg](https://i.postimg.cc/fRh01G4B/ejemplo-boxplot-ggplot2.jpg)](https://postimg.cc/ykvdZr8Z)
+
+Un punto importante en cualquier tipo de grafico que utiliza colores es que sean colores que puedan ser diferenciados por todos los usuarios, es decir que sean amigable con las personas que presentan distinto tipo de daltonismo. En la pagina web https://venngage.com/blog/color-blind-friendly-palette/ se puede encontrar informacion interesante de los distintos tipos de daltonismo y que paleta de colores son adecuadas para cada uno.
+
+Para cambiar los colores en ggplot2 se utiliza el comando `scale_fill_manual(values=XXXXXXX)` donde en XXXXXXX se ingresan los colores manualmente (uno a uno) o el nombre de una paleta de colores definida.
+```{r}
+p <- ggplot(data=reads, aes(x=Library, y=nreads, fill=Library)) + 
+  geom_boxplot()+  
+  ggtitle("Ejemplo boxplot ggplot2 color-blind-friendly") +
+  xlab("Libreria") + ylab("Número lecturas") + 
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic")) 
+p + scale_fill_manual(values=cbPalette)
+# p + scale_fill_manual(values=c("red", "blue", "green")) #ejemplo de ingreso manual, color a color
+```
+
+[![Ejemplo-boxplot-ggplot2-color-blind-friendly.jpg](https://i.postimg.cc/QxWT4ptg/Ejemplo-boxplot-ggplot2-color-blind-friendly.jpg)](https://postimg.cc/SJkRjYcj)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
