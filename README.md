@@ -246,7 +246,7 @@ Listo
 
 Los script de R pueden correrse sin necesidad de abrir R propiamente tal, usando el comando `Rscript` seguido del archivo .R, el resultado de este script aparecerá en pantalla.
 Si uso el comando `R CMD BATCH` tambien corro el archivo .R, pero ahora el resultado del script se guarda en un archivo .Rout el cual contiene la informacion basica de R, el contenido del script y el resultado, continuado de datos del procesamiento del script como el tiempo. Ejemplo:
-```{bash}
+```{r}
 $ R CMD BATCH holascript.R
 $ cat holascript.Rout 
 
@@ -295,25 +295,27 @@ Existen varios paquetes con funciones especializadas para graficar datos genetic
 
 En primer lugar dentro de esta funcion *Graphics* se vio graficos clasicos como graficos de puntos o `plot`, de barras o `barplot`, de caja y bigotes o `boxplot`, histogramas o `hist`, de torta o `pie`, entre otros.
 
-- Gráfico de puntos:
+#### Gráfico de puntos:
 
-```{bash}
+```{r}
 plot(x=cars$speed, y=cars$dist, xlab="Velocidad", ylab="Distancia", cex=0.5, pch=19, main = "Ejemplo gráfico PLOT")
 ```
 Donde *cars* corresponde a una base de datos que viene con R, *xlab* e *ylab* son comandos para colocarles titulos a los ejes x e y, respectivamente. El comando *cex* se utiliza para determinar el tamaño del icono que marca los datos donde 1 es el tamaño estandar, *pch* es un comando para elegir el tipo de icono que marca los datos (en este caso circulos macizos) y *main* para colocar un titulo al grafico.
 
 [![Rplot.jpg](https://i.postimg.cc/CMZ3ZWHk/Rplot.jpg)](https://postimg.cc/SjhT31Px)
 
-- Gráfico de barra:
-```{bash}
+#### Gráfico de barra:
+```{r}
 barplot(reads$nreads, col=rainbow(6), xlab="Sample", ylab="Reads", main = "Ejemplo barplot")
 ```
 [![barplot.jpg](https://i.postimg.cc/sXg8XYcQ/barplot.jpg)](https://postimg.cc/HJF3v7Fd)
 
+
+
 Un paquete mas especializado para los gráficos es *ggplot2* el cual se caracteriza por ir agregando linea a linea caracteristicas adicionales al gráfico.
 
-Por ejemplo en el siguiente codigo para un grafico de puntos:
-```{bash}
+#### Por ejemplo en el siguiente codigo para un grafico de puntos:
+```{r}
 ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
   ggtitle("Ejemplo ggplot2") +
   xlab("Largo sepalo") + ylab("Ancho sepalo") + 
@@ -334,7 +336,7 @@ Donde:
 [![Ejemplo-ggplot2.jpg](https://i.postimg.cc/G2sF0scD/Ejemplo-ggplot2.jpg)](https://postimg.cc/1nsnwXVR)
 
 Tambien se pueden separar las especies una en un grafico separado cada uno, usando el codigo:
-```{bash}
+```{r}
 ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
   ggtitle("Ejemplo ggplot2 separados") +
   xlab("Largo sepalo") + ylab("Ancho sepalo") + 
@@ -349,7 +351,7 @@ Donde al agregar el comando *facet_grid* estoy seleccionando en base a que param
 [![Ejemplo-ggplot2-separado.jpg](https://i.postimg.cc/kG654xVJ/Ejemplo-ggplot2-separado.jpg)](https://postimg.cc/D4hhp4dH)
 
 Tambien se pueden agregar modelos matematicos, como una linea de tendencia para cada especie de la siguiente manera:
-```{bash}
+```{r}
 ggplot(data=iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
   ggtitle("Ejemplo ggplot2 separados") +
   xlab("Largo sepalo") + ylab("Ancho sepalo") + 
@@ -363,15 +365,31 @@ Donde el comando *geom_smooth* en el metodo "lm" corresponde a un modelo lineal.
 
 [![Ejemplo-ggplot2-separados-con-modelo-lineal.jpg](https://i.postimg.cc/N0sm0zQQ/Ejemplo-ggplot2-separados-con-modelo-lineal.jpg)](https://postimg.cc/jD1LgvW1)
 
-Ahora el mismo paquete pero para graficos de barra:
+
+#### Ahora el mismo paquete pero para graficos de barra:
+```{r}
+# Cambiar orden de levels segun la columna sample"
+reads$sample<-factor(reads$sample, levels = reads$sample[order(1:length(reads$sample))])
+p <- ggplot(data=reads, aes(x=sample, y=nreads, fill=Library)) + 
+  geom_bar(stat="identity") +  
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=6))+
+  ggtitle("Ejemplo barplot ggplot2") +
+  xlab("Muestras") + ylab("Número lecturas") + 
+  theme(plot.title = element_text(color="red", size=14, face="bold.italic")) 
+p
+```
+Donde se grafican los datos *reads*, pero en primer lugar lo que se hace es ordenar el orden de las barras segun la columna de muestras en el orden en que se presentan en la columna, ya que por defecto las grafica por orden alfabetico. Para esto se utiliza la linea `reads$sample<-factor(reads$sample, levels = reads$sample[order(1:length(reads$sample))])`. El comando para que el tipo de grafico sea de barra es `geom_bar(stat="identity")`, el resto de los comandos son los mismos utilizados para el grafico de puntos antes mencionados. El gráfico resultante es:
+
+[![ejemplo-barplot-ggplot2.jpg](https://i.postimg.cc/ZRqvfwxK/ejemplo-barplot-ggplot2.jpg)](https://postimg.cc/wtSBMcrS)
+
+#### *ggplot2* tambien tiene una version para graficos de bigotes y caja:
 
 
 
 
 
 
-
-```{bash}
+```{r}
 ```
 
 
