@@ -215,26 +215,34 @@ La sintaxis basica de Markdown es:
 
 - Se pueden listar de distintas maneras:
     * Haciendo un listado de numeros:
-`1. Primero
-2. Segundo`
+```{bash}
+1. Primero
+2. Segundo
+```
 1. Primero
 2. Segundo
 
     * Usando asteriscos:
-`* Primero
-* Segundo`
+```{bash}
+* Primero
+* Segundo
+```
 * Primero
 * Segundo
 
     * Usando lineas:
-`- Primero
-- Segundo`
+```{bash}
+- Primero
+- Segundo
+```
 - Primero
 - Segundo
 
     * Usando simbolo más:
-`+ Primero
-+ Segundo`
+```{bash}
++ Primero
++ Segundo
+```
 + Primero
 + Segundo
 
@@ -260,7 +268,7 @@ La sintaxis basica de Markdown es:
 
 
 
-```{r}
+```{bash}
 ```
 
 
