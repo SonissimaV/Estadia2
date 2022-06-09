@@ -265,7 +265,7 @@ Solo pagina web: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatshee
 ```
 Solo pagina web: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
-[Operaciones basicas de Markdown] (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+[Operaciones basicas de Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 
 
