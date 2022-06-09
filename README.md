@@ -246,8 +246,17 @@ La sintaxis basica de Markdown es:
 + Primero
 + Segundo
 
-
-
+    * Usando espacios o puntos se puede hacer sub-indices:
+```{bash}
++ Primero (sin tab)
+  + Segundo (1 tab)
+    + Tercero (2 tab)
+      + Cuarto (3 tab)
+```
++ Primero
+  + Segundo
+    + Tercero
+      + Cuarto
 
 
 
