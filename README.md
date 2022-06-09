@@ -246,7 +246,7 @@ La sintaxis basica de Markdown es:
 + Primero
 + Segundo
 
-    * Usando espacios o puntos se puede hacer sub-indices:
+    * Usando tabulaciones se puede hacer sub-indices:
 ```{bash}
 + Primero (sin tab)
   + Segundo (1 tab)
@@ -258,16 +258,15 @@ La sintaxis basica de Markdown es:
     + Tercero
       + Cuarto
 
+- Se pueden insertar links: para esto simplemente se coloca la pagina web o puede colocarse un titulo y luego la pagina web.
 ```{bash}
-+ Primero (sin .)
-.+ Segundo (1 .)
-..+ Tercero (2 .)
-...+ Cuarto (3 .)
+Solo pagina web: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+[Operaciones basicas de Markdown] (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 ```
-+ Primero (sin .)
-.+ Segundo (1 .)
-..+ Tercero (2 .)
-...+ Cuarto (3 .)
+Solo pagina web: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+[Operaciones basicas de Markdown] (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+
 
 
 
