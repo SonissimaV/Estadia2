@@ -261,14 +261,30 @@ La sintaxis basica de Markdown es:
 - Se pueden insertar links: para esto simplemente se coloca la pagina web o puede colocarse un titulo y luego la pagina web.
 ```{bash}
 Solo pagina web: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-[Operaciones basicas de Markdown] (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+[Operaciones basicas de Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 ```
 Solo pagina web: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 [Operaciones basicas de Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 
+- Se pueden insertar imagenes: para esto simplemente se coloca la pagina web o puede colocarse un titulo y luego la pagina web o hacer referencia a la pagina web.
+```{bash}
+Ginkgo biloga
+![GB.png](https://i.postimg.cc/bNJnJk94/GB.png)
 
+Ginkgo biloga
+![GB.png][direccion]
+
+[direccion]: https://i.postimg.cc/bNJnJk94/GB.png
+```
+Ginkgo biloga
+![GB.png](https://i.postimg.cc/bNJnJk94/GB.png)
+
+Ginkgo biloga
+![GB.png][direccion]
+
+[direccion]: https://i.postimg.cc/bNJnJk94/GB.png
 
 
 
