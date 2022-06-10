@@ -287,7 +287,17 @@ Ginkgo biloga
 [direccion]: https://i.postimg.cc/bNJnJk94/GB.png
 
 
-R viene su version de Marckdown llamada *R Marckdown*
+R viene su version de Marckdown llamada *R Marckdown*, esta puede ser utilizada directamente desde RStudio abriendo un archivo .Rmd el cual permite escribir toda la información necesaria (en mi caso hice una replica de esta unidad pero en RMarckdown). La estructura basica de todo Rmarkdown consta de una *cabecera* en la cual se coloca información basica como el titulo del archivo, el autor, la fecha, el idioma y el tipo de salida. La cabecera es continuada con el cuerpo del archivo en el cual va todo el texto plano en codigo Markdown y ademas, los codigos R de interes con sus resultados. En esta parte, del codigo R, hay varias formas de presentar los resultados:
+
+- En primer lugar que se muestre el codigo y el resultado completo al colocar simplemente el chunks sin opciones, ejemplo:
+`   ```{r}```   ` 
+- En segundo lugar que se muestre el codigo y el resultado, pero sin los "warning" que puedan aparecer. Esto le logra colocando 
+
+para luego ser renderizada y mostrada como queda luego de ser leída 
+
+
+
+
 
 
 
