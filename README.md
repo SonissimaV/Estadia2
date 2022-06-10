@@ -187,13 +187,15 @@ title("Familia felidae (paquete rotl)")
 
 
 
-### Unidad 2, Markdown
+## Unidad 2 
+
+### Markdown
 
 El principal problema que se tiene hoy en día en la ciencia en general es la reproducibilidad de los resultados y la bioinformatica no se salva de este conflicto. Por este motivo nacen los repositorios, para poder contener gran cantidad de datos generados, pero solo tener los datos no es suficiente para lograr la tan anhelada reproducibilidad de los resultados. Se hace indispensable el poder seguir los mismos pasos, la misma depuracion de datos brutos, los mismos parametros de analisis, etc. Todo esto debe estar especificado en un script lo más claro posible y seguir el mismo orden en que fue realizado la primera vez para reproducirlo e incluso mejorarlo.
 
 Una manera de escribir estos script es en *Markdown*, el cual es un formato ampliamente utilizado en Github, Stackoverflow y otras plataformas gracias a su sencillez al tratarse de un archivo de texto plano pero con caracteristicas que permiten ser empleado, por ejemplo, para ser transformado rapidamente a HTML. Dentro de las ventajas la utilizacion de Markdown esta la aplicación universal, ya que la sintaxis es reconocida en todos los sistemas operativos, repositorios y reconocida rapidamente; ademas, las herramientas basadas en Markdown son gratis.
 
-La sintaxis basica de Markdown es:
+##### La sintaxis basica de Markdown es:
 
 - Encabezados: los titulos se anotan con *#* donde la cantidad de # va a determinar el tamaño.
 # H1 Un solo gato
@@ -286,14 +288,51 @@ Ginkgo biloga
 
 [direccion]: https://i.postimg.cc/bNJnJk94/GB.png
 
+#### RMarkdown
 
-R viene su version de Marckdown llamada *R Marckdown*, esta puede ser utilizada directamente desde RStudio abriendo un archivo .Rmd el cual permite escribir toda la información necesaria (en mi caso hice una replica de esta unidad pero en RMarckdown). La estructura basica de todo Rmarkdown consta de una *cabecera* en la cual se coloca información basica como el titulo del archivo, el autor, la fecha, el idioma y el tipo de salida. La cabecera es continuada con el cuerpo del archivo en el cual va todo el texto plano en codigo Markdown y ademas, los codigos R de interes con sus resultados. En esta parte, del codigo R, hay varias formas de presentar los resultados:
+R viene su version de Marckdown llamada *R Marckdown*, esta puede ser utilizada directamente desde RStudio abriendo un archivo .Rmd el cual permite escribir toda la información necesaria (en mi caso hice una replica de esta unidad pero en RMarckdown). La estructura basica de todo Rmarkdown consta de una *cabecera* en la cual se coloca información basica como el titulo del archivo, el autor, la fecha, el idioma y el tipo de salida (que pueden ser varios formatos distintos, entre ellos pdf, Word, HTML, R Notebooks, etc.). La cabecera es continuada con el cuerpo del archivo en el cual va todo el texto plano en codigo Markdown y ademas, los codigos R de interes con sus resultados. En esta parte, del codigo R, hay varias formas de presentar los resultados:
 
 - En primer lugar que se muestre el codigo y el resultado completo al colocar simplemente el chunks sin opciones, ejemplo:
-`   ```{r}```   ` 
-- En segundo lugar que se muestre el codigo y el resultado, pero sin los "warning" que puedan aparecer. Esto le logra colocando 
+`   ```{r}   codigo  ```   ` 
+- En segundo lugar que se muestre solo el resultado y no el codigo. Esto le logra colocando
+`   ```{r echo=FALSE}   codigo  ```   `
+- En tercer lugar y por el contrario al anterior, si se quiere solo mostrar el codigo y no el resultado se debe colocar la opción:
+`   ```{r eval=FALSE}   codigo  ```   `
+- En cuarto lugar si se desera mostrar el codigo y el resultado, pero sin los "warning" que pudiese arrojar esta a opcion:
+`   ```{r warning=FALSE}   codigo  ```   `
 
-para luego ser renderizada y mostrada como queda luego de ser leída 
+Para generar el archivo de salida o renderizar el documento se realiza desde el boton *Knit* y seleccionar la opcion de salidad como se muestra en la imagen en el circulo rojo:
+
+[![Imagen1.png](https://i.postimg.cc/43KSSbHr/Imagen1.png)](https://postimg.cc/4KgPKc55)
+
+#### De script a R Markdown
+
+Se puede pasar desde un script de R a un reporte a pesar de no estar en formato markdown, esto se logra haciendo click en *Compile report* como se muestra en la siguiente imagen señalado con una flecha roja.
+
+[![Imagen2.png](https://i.postimg.cc/fyBbrh6W/Imagen2.png)](https://postimg.cc/bSS8Z4y4)
+
+Cabe destacar que el archivo generado consta de todos los comandos corridos y los resultados obtenidos (analisis, tablas, graficos, imagenes generadas, etc.), pero de una manera no muy amigable a una persona no familiarizada con el script original.
+
+
+
+### Jupyter notebooks y JupyterLab
+
+Los notebook de jupyter son como tener varias celdas para ser corridas independientemente, cada celda puede tener texto tipo Markdown, puede tener codigos de R, de Python, entre otros. La ventaja de estos notebook es principalmente que al ser celdas separadas se pueden probar partes de codigo de manera individual antes de ser corrido completamente. Un ejemplo de esto es el siguiente donde se observa la primera celda con escritura del tipo Markdown seguida de una segunda celda con codigo Python que puede ser corrida independiente de la primera celda.
+
+[![Imagen3.png](https://i.postimg.cc/ZnkLYnxR/Imagen3.png)](https://postimg.cc/qhLKjkYV)
+
+Estos notebook pueden ser exportados en distintos formatos y ser compartidos con colaboradores.
+
+
+
+### Docker
+
+Docker es una herramienta diseñada para alcanzar la reproducibilidad maxima en el analisis de datos, ya que no solo basta con especificar los codigos, el orden en que estos son realizados, tambien es de vital importancia las versiones de los software a utilizar, los parametros de programación, los datos de partida. Bueno Docker lo que hace es generar una especie de *contenedor* en el cual puede incluirse todo lo necesario para realizar un analisis.
+
+Ademas de la clara ventaja de lograr una completa reproducibilidad, Docker permite tener distintas versiones de software en contenedores distintos, incluso versiones que podrían ser incompatibles entre ellas.
+
+Se habla de *contenedor* a una unidad estandarizada de los componentes basicos de linux, en este contenedor se instalan *imagenes* de los software a utilizar donde incluye todo los elementos necesarios para que el software se eyecute, incluido librerias, herramientas del sistema, código fuente.
+
 
 
 
