@@ -331,7 +331,13 @@ Docker es una herramienta diseñada para alcanzar la reproducibilidad maxima en 
 
 Ademas de la clara ventaja de lograr una completa reproducibilidad, Docker permite tener distintas versiones de software en contenedores distintos, incluso versiones que podrían ser incompatibles entre ellas.
 
-Se habla de *contenedor* a una unidad estandarizada de los componentes basicos de linux, en este contenedor se instalan *imagenes* de los software a utilizar donde incluye todo los elementos necesarios para que el software se eyecute, incluido librerias, herramientas del sistema, código fuente.
+Se habla de *contenedor* a una unidad estandarizada de los componentes basicos de linux, en este contenedor se instalan *imagenes* de los software a utilizar donde incluye todo los elementos necesarios para que el software se eyecute, incluido librerias, herramientas del sistema, código fuente. Son estas imagenes las que pueden ser compartidas con otro usuario para reproducir nuestros mismos resultados. 
+
+Docker tiene un listado de imagenes disponibles las cuales uno puede buscar directamente en la pagina https://hub.docker.com/ y descargarlas utilizando el comando `docker pull NOMBRE_IMAGEN` o simplemente desde nuestra terminal colocar `docker run NOMBRE_IMAGEN` y si no la tenemos automaticamente se descarga y luego se corre. 
+
+Algunos comandos basicos de Docker son:
+
+`
 
 
 
