@@ -20,14 +20,19 @@ La pagina web principal es https://postimages.org/ y en ella simplemente se carg
 
 
 
+
+
 ### Unidad 3 Genomica de poblaciones
 
+Para la comprension de esta unidad se recurrieron a las clases de [Bioinf CL-MX 2020](https://www.youtube.com/watch?v=Gdxwh2oSkOY&ab_channel=Bioinform%C3%A1ticaCL-MX)
 La genetica de poblaciones busca describir la variacion y distribucion alelica de una población en particular, dada por individuos de una misma especie que comparten tiempo y lugar. En este practico se busca analizar los genomas obtenidos de ChileGenomico y HapMap.
 
 Para realizar esto se usaran programas como:
 
-* Plink, el cual es 
-
+**Plink**, el cual es un programa que trabaja con conjuntos de datos que comprenden cientos de miles de marcadores para muchos individuos a la vez de modo que pueden manipularse y analizarse rapidamente con unos pocos comandos. 
+Este programa genera un archivos que pueden estar en formato normal: en los cuales encontramos archivos .ped que contiene los SNPs y otro .map que contiene la posiciòn. Tambien puede generar archivos en formato binario en los cuales encontramos archivos .bed que contiene toda la informacion anterior, genera tambien archicos .bim que contiene las bases originales y .fam contiene los datos de las muestras (nombre de las muestras y pedigree).
+El archivo .raw es donde Plink exporta los resultados para que sean leibles por otros programas.
+Para utilizar Plink basta con tener instalado Plink y los archivos 
 
 
 
