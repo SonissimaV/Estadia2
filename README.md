@@ -337,45 +337,17 @@ Docker tiene un listado de imagenes disponibles las cuales uno puede buscar dire
 
 Algunos comandos basicos de Docker son:
 
-`
+`docker pull NOMBRE_IMAGEN` es para poder descargar una imagen
+`docker run NOMBRE_IMAGEN` para poder correr una imagen
+`docker images` nos muestra las imagenes que se han descargado en la maquina, nos muestra el TAG (version descargada) y el ID de la imagen
+`docker ps` nos muestra todas las imagenes que se encuentran corriendo
+`docker ps -a` nos muestra las ultimas imagenes que se han corrido
+`docker start CONTENEDOR_ID` volver a correr un contenedor que ya estaba corriendo y que por algun motivo se detuvo
+`docker logs CONTENEDOR_ID` para ver las salidas del contenedor
+`docker exec` ejecuta un comando en una imagen que ya esta corriendo
+`docker exec -it CONTENEDOR_ID sh` vuelve el contenedor una shell donde uno puede ahora aplicar comandos unix
+`docker stop CONTENEDOR_ID` para detener el contenedor 
+`docker run -d NOMBRE_IMAGEN` para correr una imagen en background
+`docker rm CONTENEDOR_ID` para borrar un contenedor ya corrido
+`docker rm -f NOMBRE_IMAGEN` para borrar una imagen descargada
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{bash}
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-cd Escritorio/SONIA/estadia2/wksp2019/Unidad1/Bash_git/Prac_bash
