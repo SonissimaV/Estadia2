@@ -11,6 +11,7 @@ Mediante la utilización de Ubuntu se probaron comandos descritos en la "Unidad 
 - `pwd`   para poder conocer la ruta del directorio en el que actualmente estamos
 - `ls`    para poder conocer los archivos y carpetas que estan dentro de un directorio
 - `mkdir` para crear una carpeta
+- `mv RUTA/NOMBRE_ARCHIVO RUTA_DESTINO` para mover un archivo desde una ruta a otra destino
 - `cd`    para poder entrar a una carpeta
 - `cd ..` para poder volver a la carpeta anterior
 - `echo`  para podes imprimir en pantalla un mensaje
@@ -20,6 +21,7 @@ Mediante la utilización de Ubuntu se probaron comandos descritos en la "Unidad 
 - `cat` para ver el archivo completo sin compaginar o concatenar 2 archivos distintos en un tercero
 - `wget PAGINA_WEB` para descargar algun archivo desde un link de descarga
 - `unzip NOMBRE_ARCHIVO` para descomprimir un archivo
+- `tar -xvf NOMBRE_ARCHIVO` para descomprimir archivos .tar (-x), que nos muestre que hace (v) y reciba un archivo de entrada (f)
 
 Una vez dominado estos comandos basicos se procedio a clonar el repositorio del curso Workshop 2019 usando el comando `$ git clone https://github.com/u-genoma/wksp2019.git`, como resultado se obtuvo:
 ```{bash}
