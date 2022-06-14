@@ -18,6 +18,8 @@ Mediante la utilización de Ubuntu se probaron comandos descritos en la "Unidad 
 - `less`  para ver archivos de manera compaginada
 - `more`  para mostrar una parte de los archivos
 - `cat` para ver el archivo completo sin compaginar o concatenar 2 archivos distintos en un tercero
+- `wget PAGINA_WEB` para descargar algun archivo desde un link de descarga
+- `unzip NOMBRE_ARCHIVO` para descomprimir un archivo
 
 Una vez dominado estos comandos basicos se procedio a clonar el repositorio del curso Workshop 2019 usando el comando `$ git clone https://github.com/u-genoma/wksp2019.git`, como resultado se obtuvo:
 ```{bash}
