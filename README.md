@@ -36,9 +36,20 @@ El archivo .raw es donde Plink exporta los resultados para que sean leibles por 
 Para utilizar Plink basta con tener instalado Plink, los archivos geneticos y los comandos necesarios para generar los archivos de salida .bed, .bim y .fam.
 plink tiene una amplia variedad de opciones para poder filtrar los datos por ejemplo: segun posicion cromosomal, por muestra, segun el MAF, segun el equiliquio de Hardy-Weinberg, segun datos faltantes, etc. Se pueden revisar mas filtros en la pagina web [Filtros plink](https://www.cog-genomics.org/plink/1.9/filter)
 Ademas de entregar varios tipos de reportes tales como: archivos .ped que contienen los resumenes de los filtros realizados, .frq que contiene todas las frecuencias alelicas, .hwe que contiene los calculos de Hardy-Weinberg para cada locus. Se pueden revisar mas formatos y analisis en [Estadistica Básica plink](https://www.cog-genomics.org/plink/1.9/basic_stats).
+Otro fuerte motivo para usar plink en nuestros analisis es que el output entregado esta en un formato que puede ser reconocido como input para otro programa.
 
 
-**R** 
+**R** es uno de los programas que acepta como entradas algunas de las salidad de plink. Gracias a que posee distintos paquetes dedicados a genetica es que R ha ganado gran versatilidad en el analisis y visualización de datos genomicos. Entre estos paquetes encontramos *adegenet*, *ape* y una amplia variedad más, que puede ser revisado con detención en la pagina de CRAN para [Statistical Genetics](https://cran.microsoft.com/snapshot/2017-08-01/web/views/Genetics.html) o en Bioconductor [Bioconductor Software Packages](https://bioconductor.org/packages/release/bioc/). 
+Siempre debe considerarse que no todos los paquetes funcionan para todos los tipos de datos, por ejemplo *dartr* que esta especializado en el analisis de SNP [dartr](https://pubmed.ncbi.nlm.nih.gov/29266847/) o *rrBLUP* para analisis de GWAS [rrBLUP](https://cran.r-project.org/web/packages/rrBLUP/rrBLUP.pdf).
+
+
+**Admixture** es un programa que recibe archivos obtenidos desde plink, en especifico archivos .ped. Este programa se utilizar para inferir ancestría mediante los datos de pedigree que se tienen de las muestras de SNP. El calculo de ancestría, es decir, que porcentaje del genoma corresponde a cada población genética a evaluar, puede ser realizado para distintas cantidades de poblaciones o K. El programa permite realizar el calculo para cada K que se desee evaluar y ademas hace un calculo de cross validation (cv) que nos permite elegir el mejor numero de K (menor valor de cv) osea con el menor error. 
+
+El tutorial propiamente tal consiste en:
+1. Hacer ingreso al servidor del proyecto genoma atraves del comando `shh`
+2. Generar variables transitorias o de ambiente que permitiran de manera más fácil hacer alusion a una información. En este caso serían variables que representan rutas.
+3. Analizar la calidad de los datos, para esto usa comandos de plink como `missing` el cual entrega un reporte de datos perdidos ya sea de muestras o de variantes. Con estos resultados de datos perdidos se puede analizar si una muestra tiene un porcentaje muy alto de datos perdidos y quizas sería mejor no considerarla o si un SNP en particular no es correctamente leido en todas las muestras y es mejor descartarlo para el analisis.
+
 
 
 
