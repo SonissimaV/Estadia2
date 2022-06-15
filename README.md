@@ -45,14 +45,26 @@ Siempre debe considerarse que no todos los paquetes funcionan para todos los tip
 
 **Admixture** es un programa que recibe archivos obtenidos desde plink, en especifico archivos .ped. Este programa se utilizar para inferir ancestría mediante los datos de pedigree que se tienen de las muestras de SNP. El calculo de ancestría, es decir, que porcentaje del genoma corresponde a cada población genética a evaluar, puede ser realizado para distintas cantidades de poblaciones o K. El programa permite realizar el calculo para cada K que se desee evaluar y ademas hace un calculo de cross validation (cv) que nos permite elegir el mejor numero de K (menor valor de cv) osea con el menor error. 
 
+
 El tutorial propiamente tal consiste en:
-1. Hacer ingreso al servidor del proyecto genoma atraves del comando `shh`
-2. Generar variables transitorias o de ambiente que permitiran de manera más fácil hacer alusion a una información. En este caso serían variables que representan rutas.
-3. Analizar la calidad de los datos, para esto usa comandos de plink como `missing` el cual entrega un reporte de datos perdidos ya sea de muestras o de variantes. Con estos resultados de datos perdidos se puede analizar si una muestra tiene un porcentaje muy alto de datos perdidos y quizas sería mejor no considerarla o si un SNP en particular no es correctamente leido en todas las muestras y es mejor descartarlo para el analisis.
 
+1. Hacer ingreso al servidor del proyecto genoma atraves del comando `$ ssh bioinfo1@genoma.med.uchile.cl` y una contraseña dispuesta para el.
 
+2. Generar variables transitorias o de ambiente que permitiran de manera más fácil hacer alusion a una información. En este caso serían variables que representan rutas y se tratan de los comandos:
+`export T=/shared/bioinfo1/GWA_tutorial/1_QC_GWAS` ,  `export P=/shared/bioinfo1/GWA_tutorial/2_Population_stratification/` , `export C=/shared/bioinfo1/ChileGenomico` y `export G=~/1000G` .
 
+3. Analizar la calidad de los datos, para esto usa comandos de plink como `missing` el cual entrega un reporte de datos perdidos ya sea de muestras o de variantes. Con estos resultados de datos perdidos se puede analizar si una muestra tiene un porcentaje muy alto de datos perdidos y quizas sería mejor no considerarla o si un SNP en particular no es correctamente leido en todas las muestras y es mejor descartarlo para el analisis. Para esto se utiliza el comando `plink --bfile $C/chilean_all48_hg19 --missing`
 
+4. Con el fin de poder visualizar de manera más rapida y sencilla estos datos perdidos es que se utiliza R, en particular se realiza un histograma con los datos obtenidos del comando anterior. El comando para la grafica es `Rscript --no-save $T/hist_miss.R` donde hist_miss es un script previamente formulado en formato R. Como resultado de este script se obtienen 2 graficos:
+[![histimiss.png](https://i.postimg.cc/R0n5qdB7/histimiss.png)](https://postimg.cc/4KZFSzny)
+En este grafico observamos que la mayoria de las muestras tiene valores muy bajos de datos perdidos, mientras que en el siguiente grafico podemos ver que algunos SNPs en particular no se encuentran en todas las muestras.
+[![histlmiss.png](https://i.postimg.cc/hvmfrTTT/histlmiss.png)](https://postimg.cc/9wWmX4xQ)
+
+5. Al visualizar estos graficos podemos determinar un rango de corte para descargar muestras o SNP sin perder un gran numero. Para la eliminación de estos se utilizan los siguientes comandos:
+` plink --bfile $C/chilean_all48_hg19 --geno 0.2 --make-bed --out chilean_all48_hg19_2` para eliminar las variantes del archivo *chilean_all48_hg19* que tengan una perdida mayor al 20% y haga un nuevo archivo depurado con nombre *chilean_all48_hg19_2*.
+`plink --bfile chilean_all48_hg19_2 --mind 0.2 --make-bed --out chilean_all48_hg19_3` para eliminar en el archivo generado con el comando anteior las muestras que tengan una perdidad mayor al 20% y las guarde en un archivo llamado *chilean_all48_hg19_3*.
+
+6. 
 
 
 
