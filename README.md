@@ -22,6 +22,7 @@ Mediante la utilización de Ubuntu se probaron comandos descritos en la "Unidad 
 - `wget PAGINA_WEB` para descargar algun archivo desde un link de descarga
 - `unzip NOMBRE_ARCHIVO` para descomprimir un archivo
 - `tar -xvf NOMBRE_ARCHIVO` para descomprimir archivos .tar (-x), que nos muestre que hace (v) y reciba un archivo de entrada (f)
+- `scp SERVIDOR:/RUTA_ABSOLUTA/ARCHIVO_DESCARGAR ./` para descargar un archivo desde un servidor a nuestra carpeta actual
 
 Una vez dominado estos comandos basicos se procedio a clonar el repositorio del curso Workshop 2019 usando el comando `$ git clone https://github.com/u-genoma/wksp2019.git`, como resultado se obtuvo:
 ```{bash}
