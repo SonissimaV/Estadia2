@@ -63,9 +63,25 @@ En este grafico observamos que la mayoria de las muestras tiene valores muy bajo
 5. Al visualizar estos graficos podemos determinar un rango de corte para descargar muestras o SNP sin perder un gran numero. Para la eliminación de estos se utilizan los siguientes comandos:
 ` plink --bfile $C/chilean_all48_hg19 --geno 0.2 --make-bed --out chilean_all48_hg19_2` para eliminar las variantes del archivo *chilean_all48_hg19* que tengan una perdida mayor al 20% y haga un nuevo archivo depurado con nombre *chilean_all48_hg19_2*.
 `plink --bfile chilean_all48_hg19_2 --mind 0.2 --make-bed --out chilean_all48_hg19_3` para eliminar en el archivo generado con el comando anteior las muestras que tengan una perdidad mayor al 20% y las guarde en un archivo llamado *chilean_all48_hg19_3*.
+Luego se hace el mismo ejercicio, pero con un umbral de corte del 2%.
 
-6. 
+6. Posteriormente a la depuracion de datos perdidos lo que se realiza es la verificación del sexo de cada muestra. Para esto se utiliza el ultimo archivo creado y el comando `plink --bfile chilean_all48_hg19_5 --check-sex` el cual entrega como resultado  un archivo que es utilizado para graficar el resultado mediante un script de R y el comando `Rscript --no-save $T/gender_check.R`. Obteniendo los graficos:
+[![Men-check.png](https://i.postimg.cc/BnLtSzqS/Men-check.png)](https://postimg.cc/3kh39n4V)
+[![Women-check.png](https://i.postimg.cc/MTVqgkb4/Women-check.png)](https://postimg.cc/ZBbGyMQF)
+En el cual se observa en los ejes X el parametro F, el cual hace referencia a la consaguineidad del cromosoma X. Como los hombres solo poseen un cromosoma X se espera una consanguineidad muy alta (>0.8 segun los filtros de plink) y para las mujeres al tener 2 cromosomas X se espera una consanguineidad baja (<0.2 segun los filtros de plink). Por lo tanto, se observan discrepancias en los sexos, ya que hay 1 hombre con F menor a 0.8 y 1 mujer con F>0.5. 
 
+7. Para eliminar estos individuos con discrepancia de sexo se utilizan 2 comandos, en primer lugar el comando `grep "PROBLEM" plink.sexcheck | awk '{print$1,$2}'> sex_discrepancy.txt` el cual me extrae desde el archivo *plink.sexcheck* las lineas que presenten la palabra *PROBLEM*, de estas lineas se va a quedar con las columnas 1 y 2 y el resultado de esto lo va a guardar en un archivo de texto plano llamado *sex_discrepancy*. Posteriormente utiliza el comando `plink --bfile chilean_all48_hg19_5 --remove sex_discrepancy.txt --make-bed --out chilean_all48_hg19_6` para generar un nuevo archivo (llamado *out chilean_all48_hg19_6*) en el cual, utilizando como base el archivo depurado en el paso 5., se remuevan los individuos que poseen las discrepancias de sexo.
+
+8. El paso siguiente es quedarse con las variantes correspondientes a los cromosomas autosomicos, es decir del 1 al 22. Para esto se usan los comandos `awk '{ if ($1 >= 1 && $1 <= 22) print $2 }' chilean_all48_hg19_6.bim > snp_1_22.txt` el cual usando como entrada el archivo *chilean_all48_hg19_6.bim* hace una lista de los SNP (columna 2 del archivo) que cumplan con la condicion de tener valores entre 1 y 22 de la columna 1, el resultado de esto lo escribe en un archivo de texto plano llamado *snp_1_22.txt*
+Luego utiliza el comando `plink --bfile chilean_all48_hg19_6 --extract snp_1_22.txt --make-bed --out chilean_all48_hg19_7` que hace que usando el listado de SNPs extraiga todas esas filas desde el archivo base *chilean_all48_hg19_6* y generar un nuevo archivo llamado *chilean_all48_hg19_7*
+
+9. Utilizando solo las variantes de los cromosomas autosomicos se calcula las frecuencias alelicas para cada SNP utilizando el comando `plink --bfile chilean_all48_hg19_7 --freq --out MAF_check` que la salida es utilizada para realizar un grafico de distribución para las frecuencias del alelo menor (MAF) mediante otro script de R con el comando `Rscript --no-save $T/MAF_check.R` 
+
+10. Con los calculos realizados de frecuencias alelicas se puede ahora descartar las variantes que son monomorficas, ya que al no tener variabilidad tampoco nos entregan información relevante para evaluar la ansestría. Con este fin se utiliza el comando `plink --bfile chilean_all48_hg19_7 --maf 0.011 --make-bed --out chilean_all48_hg19_8` con el cual tendremos como salida el archivo *chilean_all48_hg19_8*.
+
+11. El siguiente filtro a ocupar correponde al filtro de Equilibrio de Hardy-Weinberg (HWE), ya que las variantes que presenten una desviación muy grande de la esperada podrían ser variantes que presenten algun tipo de error. Se utiliza el comando `plink --bfile chilean_all48_hg19_8 --hardy` el cual hace un calculo del valor esperado, el valor obtenido y una pueba estadistica que nos entrega un p-value. En base a estos p-value se realiza un comando `awk '{ if ($9 <0.000001) print $0 }' plink.hwe > plinkzoomhwe.hwe` seguido por `Rscript --no-save $T/hwe.R` que nos permite visualizar en un histograma los valores del Equilibrio de Hardy-Weinberg y otro donde muestra cuantos se desvian de este. Graficos:
+[![histhwe.png](https://i.postimg.cc/zX77T0RY/histhwe.png)](https://postimg.cc/nCsqJKk3)
+[![histhwe-below-theshold.png](https://i.postimg.cc/htGrsT9z/histhwe-below-theshold.png)](https://postimg.cc/bsKkNGVp)
 
 
 
