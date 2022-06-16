@@ -157,7 +157,6 @@ Se prueba el comando *grep* usando `grep lycopersicum jitomate.fasta`, obteniend
 ```
 Ademas de esto tiene muchas más opciones, por ejemplo usando *-c* permite contar las lineas donde aparecen un caracter de interes; *-l* entrega todos los nombres de archivos en los cuales se encuentra la expresion de interes, al agregar *-i* se hace insensible la busqueda a mayusculas o minusculas; *-w* termine buscar palabras enteras con lo que busco y no partes de palabras.
 
-Se realizaron los ejercicios 1 y 2:
 *ejercicio 1*
 ```{bash}
 $ grep -oE "\Physalis philadelphica" tomatesverdes.fasta 
