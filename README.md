@@ -168,9 +168,6 @@ Physalis philadelphica
 Physalis philadelphica
 ```
 
-*ejercicio 2*
-Pendiente!
-
 
 ### Loops
 Los loops son funciones que se repiten una serie de comandos cuando se cumplan las condiciones, en el caso de bash tienen una estructura basica de:
