@@ -82,32 +82,71 @@ Luego utiliza el comando `plink --bfile chilean_all48_hg19_6 --extract snp_1_22.
 11. El siguiente filtro a ocupar correponde al filtro de Equilibrio de Hardy-Weinberg (HWE), ya que las variantes que presenten una desviación muy grande de la esperada podrían ser variantes que presenten algun tipo de error. Se utiliza el comando `plink --bfile chilean_all48_hg19_8 --hardy` el cual hace un calculo del valor esperado, el valor obtenido y una pueba estadistica que nos entrega un p-value. En base a estos p-value se realiza un comando `awk '{ if ($9 <0.000001) print $0 }' plink.hwe > plinkzoomhwe.hwe` seguido por `Rscript --no-save $T/hwe.R` que nos permite visualizar en un histograma los valores del Equilibrio de Hardy-Weinberg y otro donde muestra cuantos se desvian de este. Graficos:
 [![histhwe.png](https://i.postimg.cc/zX77T0RY/histhwe.png)](https://postimg.cc/nCsqJKk3)
 [![histhwe-below-theshold.png](https://i.postimg.cc/htGrsT9z/histhwe-below-theshold.png)](https://postimg.cc/bsKkNGVp)
+En los graficos se observa que un numero alto de variantes que presentan un p-value cercano a cero, por lo tanto se filtran las variantes que tengan un p mayor 0.000001 con el comando `plink --bfile chilean_all48_hg19_8 --hwe 1e-6 --hwe-all --make-bed --out chilean_all48_hg19_9` obteniendo un archivo *chilean_all48_hg19_9* que solo contiene las variantes con p>1E-6.
 
+12. Los parentezcos desconocidos en el calculo de ancestría puede generar un error al sobreestimar la presencia de un cromosoma y de todos los SNP dentro de él, por lo tanto es indispensable descartar las muestras que esten altamente emparentadas con otras. 
+Para hacer este filtro en primer lugar, se requiere que los SNP sean independientes y no presenten ligamiento. Entonces el primer comando en utilizar `plink --bfile chilean_all48_hg19_9 --exclude $T/inversion.txt --range --indep-pairwise 50 5 0.2 --out indepSNP` nos entrega una lista de SNP que son independientes entre sí y que tienen un r2 menor a 0.2 con respecto a los otros SNPs. 
+A continuación se utiliza esta salidad en el comando `plink --bfile chilean_all48_hg19_9 --extract indepSNP.prune.in --genome --min 0.2 --out pihat_min0.2` para realizar el analisis de parentezco donde se seleccionan los pihat>=0.2, es decir, que los genomas no compartan mas del 20% de identidad entre dos muestras.
+Como resultado de esto se obtiene una tabla donde se observan comparaciones de pares de individuos donde el pi_hat calculado es mayor a 0.2 y mediante la utilización de R se pueden obtener los graficos de pi_hat y más interesantemente un resumen de que muestra es la que más se repite con el comando `rel <- read.table("pihat_min0.2.genome", header=T)` obteniendo como resultado que la muestra ARI001 genera los mayores parentezcos. 
+Entonces se opta por eliminar esta muestra con el comando `subset(rel, !IID1 %in% "ARI001" & !IID2 %in% "ARI001")` y se vuelve a realizar el analisis, arroyando ahora como posible muestras problema las ARI018 y ARI021. Por lo tanto, seleccionando estas 3 muestras del dataset .fam con el comando `awk '$2=="ARI001" || $2=="ARI021" || $2=="ARI018"' chilean_all48_hg19_9.fam > to_romeve_by_relatedness.txt` genero un archivo que puede ser utilizado para eliminar estas muestras desde el dataset depurado *chilean_all48_hg19_9* con el comando `plink -bfile chilean_all48_hg19_9 -remove to_romeve_by_relatedness.txt -make-bed --out chilean_all48_hg19_10`.
 
+13. Posterior al filtrado de muestras emparentadas lo que continua es integrar nuestros datos a la base de datos de 1000 genomas, para esto en primer lugar se eliminan las variantes duplicadas en el set de datos de ChileGenomico con 1000G. Esto se logra con los comandos `plink --bfile chilean_all48_hg19_10 --list-duplicate-vars suppress-first` y `plink --bfile chilean_all48_hg19_10 --exclude plink.dupvar --make-bed --out chilean_all48_hg19_11`.
+Luego se extraen las variantes presentes en ChileGenomico por un lado y de 1000G por otro lado, para esto se utilizan los comandos `cut -f 2 chilean_all48_hg19_11.bim | sort -u > chilean_all48_hg19_11.snps` y `cut -f 2 $G/1kG_MDS5.bim | sort -u  > 1kG_MDS5.snps` donde se utilizado el comando *sort* para poder tenerlos por orden.
+A continuación se buscan los SNP en comun entre las dos listas usando el comando `comm -12 chilean_all48_hg19_11.snps 1kG_MDS5.snps > common_snps.txt` con el cual se generará un archivo de texto plano con el listado de SNPs compartidos. Con esta lista de SNPs compartidos ahora se extrae la información de los SNP desde 1000G con el comando `plink --bfile $G/1kG_MDS5 --extract common_snps.txt --recode --make-bed --out 1kG_MDS6` y se realiza lo mismo para nuestro dataset de ChileGenomico con `plink --bfile chilean_all48_hg19_11 --extract common_snps.txt --make-bed --out chilean_all48_hg19_12`.
 
+14. Con los 2 archivos de SNPs comunes par ChileGenomico y 1000G, el siquiente paso es homologar las versiones del genoma, ya que ChileGenomico es la version hg19 y para 1000G no estamos seguro. Para realizar la homologación de los SNPs de 1000G en las coordenadas de hg19 se usa el comando `awk '{print $2, $4}' chilean_all48_hg19_12.bim> buildhapmap.txt` que genera un archivo de texto plano con el ID de cada SNP y la posición fisica de cada uno. Se realiza a continuación el comando `plink --bfile 1kG_MDS6 --update-map buildhapmap.txt --make-bed --out 1kG_MDS7` con el que finalmente tendremos ambos dataset con las mismas coordenadas.
 
+15. Se debe considerar antes de fusionar los dos dataset que: i) ambos se encuentren en el mismo genoma de referencia, ii) que en ambos casos la hebra sentido sea la misma y iii) una ultima depuración para asegurarse que los SNPs no difieran entre ellos.
+i) Similar a los realizado en el punto anterior con los archivos .bim es que ahora se realiza en ChileGenomico usando como referencia 1000G y el comando `awk '{print $2, $5}' 1kG_MDS7.bim> 1kG_ref-list.txt` seguido de `plink --bfile chilean_all48_hg19_12 --reference-allele 1kG_ref-list.txt --make-bed --out chilean_all48_hg19_13`; para verificar que todo ocurrio correctamente se corre el comando `grep "Impossible" chilean_all48_hg19_13.log | wc -l` el cual arroja que hubieron 0 errores.
+ii) Para resolver los potenciales problemas de hebra en sentido y antisentido es que se utilizan los comandos `awk '{print $2, $5, $6}' 1kG_MDS7.bim> 1kG_MDS7_tmp` y `awk '{print $2, $5, $6}' chilean_all48_hg19_13.bim > chilean_all48_hg19_13_tmp` los cuales generan nuevos archivos solo con las filas con los nombres de los SNP y los alelos 1 y 2, tanto para ChileGenomico como para 1000G. Al utilizar el comando `sort 1kG_MDS7_tmp chilean_all48_hg19_13_tmp | uniq -u > all_differences.txt` se genera un archivo de texto plano que contenga las filas unidas que sean producto de la union ordenada de ambos archivos, es decir, un listado de los SNP que presenten diferencias en el orden de los alelos. Finalmente cuenta las lineas en este archivo mediante el comando `wc -l all_differences.txt` obteniendo 0, osea que no hay discrepancias en la direccion de las hebras.
+En el caso que el archivo hubiera mostrado discrepancias se deberian realizar los siguientes comandos `awk '{print $ 1}' all_differences.txt | sort -u > flip_list.txt` , `plink --bfile chilean_all48_hg19_13 -flip flip_list.txt --reference-allele 1kG_ref-list.txt --make-bed --out chilean_all48_hg19_14` lo cual genera un dataset con la lista de alelos volteadas para ChileGenomico. Posterior a esto deberia verificarse si siguen existiendo diferencias con los comandos `awk '{print $2, $5, $6}' chilean_all48_hg19_14.bim > chilean_all48_hg19_14_tmp`, `sort 1kG_MDS7_tmp chilean_all48_hg19_14_tmp | uniq -u> uncorresponding_SNPs.txt` y `wc -l uncorresponding_SNPs.txt` que nos arroja una cuenta de 0 lineas.
+iii) Para asegurarse que ningun SNP presente problemas se utiliza el comando `awk '{print $ 1}' uncorresponding_SNPs.txt | sort -u > SNPs_for_exlusion.txt` el cual nos dara un listado ordenado de SNP que presentaron problemas. Se utiliza este listado para eliminar estos SNP desde los dataset de 1000G con `plink --bfile 1kG_MDS7 --exclude SNPs_for_exlusion.txt --make-bed --out 1kG_MDS8` y desde ChileGenomico con `plink --bfile chilean_all48_hg19_14 --exclude SNPs_for_exlusion.txt --make-bed --out chilean_all48_hg19_15`.
 
+16. Ahora que no hay discrepancias se pueden unir los dos dataset mediante el comando `plink --bfile 1kG_MDS8 --bmerge chilean_all48_hg19_15.bed chilean_all48_hg19_15.bim chilean_all48_hg19_15.fam --allow-no-sex --make-bed --out MDS_merge` el cual genera el archivo de salida con los datos unidos *MDS_merge.bed*
 
+17. El analisis de estructura poblacional requiere de un analisis MDS, el cual a su vez asume que los SNP no presentan ligación por lo que se utiliza el archivo de texto plano que listaba los SNP independientes y el comando `plink --bfile MDS_merge --extract indepSNP.prune.in --genome --out MDS_merge2` que a su vez analiza nuevamente los parentezcos al haber agregado mas muestras (las de 1000G) y a continuación el comando `plink --bfile MDS_merge --read-genome MDS_merge2.genome --cluster --mds-plot 10 --out MDS_merge3` el cual busca los agrupamientos de parentezcos y luego realiza la prueba MDS de los 10 primeros componentes principales y que todo lo guarde como un archivo *MDS_merge3*. 
 
-
-
-
+18. El paso siguiente es generar un archivo con la información de las poblaciones usando el comando `wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20100804/20100804.ALL.panel` que obtiene desde internet el archivo descargable de la pagina web ingresada en el comando.
+Con todos estos datos de poblaciones se hacen subset de datos poblacionares por etnia con los comandos:
 ```{bash}
+awk '{print$1,$1,$2}' 20100804.ALL.panel > ethnicity_1kG.txt
+sed 's/JPT/ASN/g' ethnicity_1kG.txt>ethnicity_1kG2.txt
+sed 's/ASW/AFR/g' ethnicity_1kG2.txt>ethnicity_1kG3.txt
+sed 's/CEU/EUR/g' ethnicity_1kG3.txt>ethnicity_1kG4.txt
+sed 's/CHB/ASN/g' ethnicity_1kG4.txt>ethnicity_1kG5.txt
+sed 's/CHD/ASN/g' ethnicity_1kG5.txt>ethnicity_1kG6.txt
+sed 's/YRI/AFR/g' ethnicity_1kG6.txt>ethnicity_1kG7.txt
+sed 's/LWK/AFR/g' ethnicity_1kG7.txt>ethnicity_1kG8.txt
+sed 's/TSI/EUR/g' ethnicity_1kG8.txt>ethnicity_1kG9.txt
+sed 's/MXL/AMR/g' ethnicity_1kG9.txt>ethnicity_1kG10.txt
+sed 's/GBR/EUR/g' ethnicity_1kG10.txt>ethnicity_1kG11.txt
+sed 's/FIN/EUR/g' ethnicity_1kG11.txt>ethnicity_1kG12.txt
+sed 's/CHS/ASN/g' ethnicity_1kG12.txt>ethnicity_1kG13.txt
+sed 's/PUR/AMR/g' ethnicity_1kG13.txt>ethnicity_1kG14.txt
 ```
+Y luego se crea las etnias MAP (mapuche) y AYM (aimara) con los datos de ChileGenomico y el comando `awk '{if($1~/CDSJ/) pop="MAP"}{if($1~/ARI/) pop="AYM"} {print $1, $2, pop}' chilean_all48_hg19_14.fam > ethnicityfile_CLG.txt` el cual se concatena a las demas etnias con el comando `cat ethnicity_1kG14.txt ethnicityfile_CLG.txt | sed -e '1i \ FID IID ethnicity'> ethnicityfile.txt`
 
+19. Todos estos subset poblacionales se pueden graficar con `Rscript $W/MDS_merged.R` que nos entrega el grafico:
+[![MDS.png](https://i.postimg.cc/cLmnf0Mh/MDS.png)](https://postimg.cc/755hkvRJ)
+Donde al graficar los 2 primeros componentes principales del MDS podemos ver una clara separación de la etnia africana, la asiatica y la europea, pero por otro lado, no hay una completa separación de las etnias americanas, aymaras y mapuches.
 
+20. Finalmente la ancestría se calcula utilizando el programa *Admixture* el cual asume independencia de los SNP y se utiliza la lista de SNP independientes generada con antelación y el comando `plink --bfile MDS_merge --extract indepSNP.prune.in --make-bed --out MDS_merge_r2_lt_0.2`. Con este resultado podemos realizar el analisis con el comando `admixture -j4 --cv MDS_merge_r2_lt_0.2.bed 3 > MDS_merge_r2_lt_0.2.K3.log` que el comando *cv* que nos entrega el calculo de cross validation para un K o numero poblacional de 3. Se repite el mismo comando pero ahora para K= 4, 5 y 6 usando el comando `for k in $(seq 4 6)\
+  do\
+    admixture -j44 --cv MDS_merge_r2_lt_0.2.bed $k > MDS_merge_r2_lt_0.2.K$k.log	\	
+  done`
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-cd Escritorio/SONIA/estadia2/wksp2019/Unidad1/Bash_git/Prac_bash
+21. Para poder visualizar los resultados se utiliza el programa R, pero primero se determina el orden en que va a graficar las etnias, para esto es el comando
+```{r}
+popinfo <- read.table("ethnicityfile.txt", as.is=T, header=T)
+popinfo_ls <- split(popinfo, popinfo[,3])
+names(popinfo_ls)
+[1] "AFR" "AMR" "ASN" "AYM" "EUR" "MAP"
+popinfo_sorted <- do.call(rbind, popinfo_ls[c("AFR", "EUR", "ASN", "AMR", "AYM", "MAP")])
+write.table(popinfo_sorted, "popinfo_sorted.txt", sep="\t", row.names=F)
+q()
+```
+Seguido del comando `Rscript $W/admixture_plot.R popinfo_sorted.txt MDS_merge_r2_lt_0.2.fam` que nos entrega el grafico:
+[![admixture.png](https://i.postimg.cc/3wh0yjr0/admixture.png)](https://postimg.cc/jD8Sm77R)
+Y si analizamos el menor valor cv para cada K obtenemos que el numero poblacional que mejor representa nuestra ancestría es 4 y su grafico ampliado es:
+[![admi-final.png](https://i.postimg.cc/TwThtTBk/admi-final.png)](https://postimg.cc/QBnXtZ85)
+En este grafico se observa que las poblaciones aymara y mapuche tienen un gran porcentaje de su genoma compartido con la poblacion amerindia, menor porcentaje europeo, poco porcentaje africano y casi nada de porcentaje asiatico.
