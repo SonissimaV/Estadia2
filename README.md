@@ -3,7 +3,7 @@ CURSO TÉCNICAS  Y METODOLOGIAS EN GENÉTICA
 
 
 ## Semana 1, comando basicos y como hacer un repositorio
-Guiandome con el tutorial https://docs.github.com/es/get-started/quickstart/hello-world y siguiendo las unidades desde https://github.com/u-genoma/wksp2019.
+Esta semana fue realizada guiandome con el tutorial https://docs.github.com/es/get-started/quickstart/hello-world y siguiendo las unidades desde https://github.com/u-genoma/wksp2019.
 
 
 ### Unidad 1, Línea de comando
