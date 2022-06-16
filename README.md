@@ -1,4 +1,4 @@
-## Semana 3
+# Semana 3
 
 ### Repositorio de imagenes
 
@@ -22,7 +22,9 @@ La pagina web principal es https://postimages.org/ y en ella simplemente se carg
 
 
 
-### Unidad 3 Genomica de poblaciones
+
+
+## Unidad 3 Genomica de poblaciones
 
 Para la comprension de esta unidad se recurrieron a las clases de [Bioinf CL-MX 2020](https://www.youtube.com/watch?v=Gdxwh2oSkOY&ab_channel=Bioinform%C3%A1ticaCL-MX)
 
@@ -56,8 +58,11 @@ El tutorial propiamente tal consiste en:
 3. Analizar la calidad de los datos, para esto usa comandos de plink como `missing` el cual entrega un reporte de datos perdidos ya sea de muestras o de variantes. Con estos resultados de datos perdidos se puede analizar si una muestra tiene un porcentaje muy alto de datos perdidos y quizas sería mejor no considerarla o si un SNP en particular no es correctamente leido en todas las muestras y es mejor descartarlo para el analisis. Para esto se utiliza el comando `plink --bfile $C/chilean_all48_hg19 --missing`
 
 4. Con el fin de poder visualizar de manera más rapida y sencilla estos datos perdidos es que se utiliza R, en particular se realiza un histograma con los datos obtenidos del comando anterior. El comando para la grafica es `Rscript --no-save $T/hist_miss.R` donde hist_miss es un script previamente formulado en formato R. Como resultado de este script se obtienen 2 graficos:
+
 [![histimiss.png](https://i.postimg.cc/R0n5qdB7/histimiss.png)](https://postimg.cc/4KZFSzny)
+
 En este grafico observamos que la mayoria de las muestras tiene valores muy bajos de datos perdidos, mientras que en el siguiente grafico podemos ver que algunos SNPs en particular no se encuentran en todas las muestras.
+
 [![histlmiss.png](https://i.postimg.cc/hvmfrTTT/histlmiss.png)](https://postimg.cc/9wWmX4xQ)
 
 5. Al visualizar estos graficos podemos determinar un rango de corte para descargar muestras o SNP sin perder un gran numero. Para la eliminación de estos se utilizan los siguientes comandos:
@@ -66,8 +71,10 @@ En este grafico observamos que la mayoria de las muestras tiene valores muy bajo
 Luego se hace el mismo ejercicio, pero con un umbral de corte del 2%.
 
 6. Posteriormente a la depuracion de datos perdidos lo que se realiza es la verificación del sexo de cada muestra. Para esto se utiliza el ultimo archivo creado y el comando `plink --bfile chilean_all48_hg19_5 --check-sex` el cual entrega como resultado  un archivo que es utilizado para graficar el resultado mediante un script de R y el comando `Rscript --no-save $T/gender_check.R`. Obteniendo los graficos:
+
 [![Men-check.png](https://i.postimg.cc/BnLtSzqS/Men-check.png)](https://postimg.cc/3kh39n4V)
 [![Women-check.png](https://i.postimg.cc/MTVqgkb4/Women-check.png)](https://postimg.cc/ZBbGyMQF)
+
 En el cual se observa en los ejes X el parametro F, el cual hace referencia a la consaguineidad del cromosoma X. Como los hombres solo poseen un cromosoma X se espera una consanguineidad muy alta (>0.8 segun los filtros de plink) y para las mujeres al tener 2 cromosomas X se espera una consanguineidad baja (<0.2 segun los filtros de plink). Por lo tanto, se observan discrepancias en los sexos, ya que hay 1 hombre con F menor a 0.8 y 1 mujer con F>0.5. 
 
 7. Para eliminar estos individuos con discrepancia de sexo se utilizan 2 comandos, en primer lugar el comando `grep "PROBLEM" plink.sexcheck | awk '{print$1,$2}'> sex_discrepancy.txt` el cual me extrae desde el archivo *plink.sexcheck* las lineas que presenten la palabra *PROBLEM*, de estas lineas se va a quedar con las columnas 1 y 2 y el resultado de esto lo va a guardar en un archivo de texto plano llamado *sex_discrepancy*. Posteriormente utiliza el comando `plink --bfile chilean_all48_hg19_5 --remove sex_discrepancy.txt --make-bed --out chilean_all48_hg19_6` para generar un nuevo archivo (llamado *out chilean_all48_hg19_6*) en el cual, utilizando como base el archivo depurado en el paso 5., se remuevan los individuos que poseen las discrepancias de sexo.
@@ -80,8 +87,10 @@ Luego utiliza el comando `plink --bfile chilean_all48_hg19_6 --extract snp_1_22.
 10. Con los calculos realizados de frecuencias alelicas se puede ahora descartar las variantes que son monomorficas, ya que al no tener variabilidad tampoco nos entregan información relevante para evaluar la ansestría. Con este fin se utiliza el comando `plink --bfile chilean_all48_hg19_7 --maf 0.011 --make-bed --out chilean_all48_hg19_8` con el cual tendremos como salida el archivo *chilean_all48_hg19_8*.
 
 11. El siguiente filtro a ocupar correponde al filtro de Equilibrio de Hardy-Weinberg (HWE), ya que las variantes que presenten una desviación muy grande de la esperada podrían ser variantes que presenten algun tipo de error. Se utiliza el comando `plink --bfile chilean_all48_hg19_8 --hardy` el cual hace un calculo del valor esperado, el valor obtenido y una pueba estadistica que nos entrega un p-value. En base a estos p-value se realiza un comando `awk '{ if ($9 <0.000001) print $0 }' plink.hwe > plinkzoomhwe.hwe` seguido por `Rscript --no-save $T/hwe.R` que nos permite visualizar en un histograma los valores del Equilibrio de Hardy-Weinberg y otro donde muestra cuantos se desvian de este. Graficos:
+
 [![histhwe.png](https://i.postimg.cc/zX77T0RY/histhwe.png)](https://postimg.cc/nCsqJKk3)
 [![histhwe-below-theshold.png](https://i.postimg.cc/htGrsT9z/histhwe-below-theshold.png)](https://postimg.cc/bsKkNGVp)
+
 En los graficos se observa que un numero alto de variantes que presentan un p-value cercano a cero, por lo tanto se filtran las variantes que tengan un p mayor 0.000001 con el comando `plink --bfile chilean_all48_hg19_8 --hwe 1e-6 --hwe-all --make-bed --out chilean_all48_hg19_9` obteniendo un archivo *chilean_all48_hg19_9* que solo contiene las variantes con p>1E-6.
 
 12. Los parentezcos desconocidos en el calculo de ancestría puede generar un error al sobreestimar la presencia de un cromosoma y de todos los SNP dentro de él, por lo tanto es indispensable descartar las muestras que esten altamente emparentadas con otras. 
@@ -127,7 +136,9 @@ sed 's/PUR/AMR/g' ethnicity_1kG13.txt>ethnicity_1kG14.txt
 Y luego se crea las etnias MAP (mapuche) y AYM (aimara) con los datos de ChileGenomico y el comando `awk '{if($1~/CDSJ/) pop="MAP"}{if($1~/ARI/) pop="AYM"} {print $1, $2, pop}' chilean_all48_hg19_14.fam > ethnicityfile_CLG.txt` el cual se concatena a las demas etnias con el comando `cat ethnicity_1kG14.txt ethnicityfile_CLG.txt | sed -e '1i \ FID IID ethnicity'> ethnicityfile.txt`
 
 19. Todos estos subset poblacionales se pueden graficar con `Rscript $W/MDS_merged.R` que nos entrega el grafico:
+
 [![MDS.png](https://i.postimg.cc/cLmnf0Mh/MDS.png)](https://postimg.cc/755hkvRJ)
+
 Donde al graficar los 2 primeros componentes principales del MDS podemos ver una clara separación de la etnia africana, la asiatica y la europea, pero por otro lado, no hay una completa separación de las etnias americanas, aymaras y mapuches.
 
 20. Finalmente la ancestría se calcula utilizando el programa *Admixture* el cual asume independencia de los SNP y se utiliza la lista de SNP independientes generada con antelación y el comando `plink --bfile MDS_merge --extract indepSNP.prune.in --make-bed --out MDS_merge_r2_lt_0.2`. Con este resultado podemos realizar el analisis con el comando `admixture -j4 --cv MDS_merge_r2_lt_0.2.bed 3 > MDS_merge_r2_lt_0.2.K3.log` que el comando *cv* que nos entrega el calculo de cross validation para un K o numero poblacional de 3. Se repite el mismo comando pero ahora para K= 4, 5 y 6 usando el comando `for k in $(seq 4 6)\
@@ -146,7 +157,11 @@ write.table(popinfo_sorted, "popinfo_sorted.txt", sep="\t", row.names=F)
 q()
 ```
 Seguido del comando `Rscript $W/admixture_plot.R popinfo_sorted.txt MDS_merge_r2_lt_0.2.fam` que nos entrega el grafico:
+
 [![admixture.png](https://i.postimg.cc/3wh0yjr0/admixture.png)](https://postimg.cc/jD8Sm77R)
+
 Y si analizamos el menor valor cv para cada K obtenemos que el numero poblacional que mejor representa nuestra ancestría es 4 y su grafico ampliado es:
+
 [![admi-final.png](https://i.postimg.cc/TwThtTBk/admi-final.png)](https://postimg.cc/QBnXtZ85)
+
 En este grafico se observa que las poblaciones aymara y mapuche tienen un gran porcentaje de su genoma compartido con la poblacion amerindia, menor porcentaje europeo, poco porcentaje africano y casi nada de porcentaje asiatico.
