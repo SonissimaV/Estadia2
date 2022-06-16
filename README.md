@@ -26,7 +26,7 @@ La pagina web principal es https://postimages.org/ y en ella simplemente se carg
 
 ## Unidad 3 Genomica de poblaciones
 
-Para la comprension de esta unidad se recurrieron a las clases de [Bioinf CL-MX 2020](https://www.youtube.com/watch?v=Gdxwh2oSkOY&ab_channel=Bioinform%C3%A1ticaCL-MX)
+Para la comprension de esta unidad se recurrieron a las clases de [Bioinf CL-MX 2020](https://www.youtube.com/watch?v=Gdxwh2oSkOY&ab_channel=Bioinform%C3%A1ticaCL-MX). No tuve acceso al servidor del laboratorio por lo que los comandos no los pude realizar y lo que ve es el resultado de investigación en diversas paginas web para poder determinar que hace con certeza cada comando. Es por este mismo motivo que no pude responder las tareas que aparecian durante toda la unidad.
 
 La genetica de poblaciones busca describir la variacion y distribucion alelica de una población en particular, dada por individuos de una misma especie que comparten tiempo y lugar. En este practico se busca analizar los genomas obtenidos de ChileGenomico y HapMap.
 
